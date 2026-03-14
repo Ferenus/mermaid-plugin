@@ -1,0 +1,20 @@
+modules:
+  macro:
+    - key: mermaid-diagrams-for-confluence-hello-world
+      resource: main
+      resolver:
+        function: resolver
+      title: Mermaid Diagrams for Confluence
+      description: Inserts Hello world!
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: static/hello-world/build
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/7d977eb8-4b48-476a-9912-0b2f0ab31729
