@@ -96,6 +96,17 @@ body {
   background: var(--bg-tertiary);
 }
 
+.toolbar-btn.icon-btn {
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar-btn.icon-btn svg {
+  display: block;
+}
+
 .toolbar-btn.active {
   background: var(--accent-color);
   color: #fff;
@@ -140,11 +151,6 @@ body {
   overflow: hidden;
 }
 
-.editor-content.view-both .editor-pane,
-.editor-content.view-both .preview-pane {
-  width: 50%;
-}
-
 .editor-content.view-code .editor-pane {
   width: 100%;
 }
@@ -162,9 +168,21 @@ body {
 }
 
 .editor-pane {
-  border-right: 1px solid var(--border-color);
   overflow: hidden;
   display: flex;
+}
+
+.split-divider {
+  width: 6px;
+  cursor: col-resize;
+  background: var(--border-color);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.split-divider:hover,
+.split-divider:active {
+  background: var(--accent-color);
 }
 
 .code-textarea {

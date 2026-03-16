@@ -15,8 +15,11 @@ export default function Editor({ storageKey, initialCode, theme }) {
   const [showTemplates, setShowTemplates] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [history, setHistory] = useState([]);
+  const [splitPercent, setSplitPercent] = useState(50);
   const textareaRef = useRef(null);
   const saveTimerRef = useRef(null);
+  const editorContentRef = useRef(null);
+  const isDraggingRef = useRef(false);
   const panZoom = usePanZoom();
 
   useEffect(() => {
@@ -82,6 +85,31 @@ export default function Editor({ storageKey, initialCode, theme }) {
       });
   };
 
+  const handleDividerMouseDown = useCallback((e) => {
+    e.preventDefault();
+    isDraggingRef.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+
+    const onMouseMove = (moveEvent) => {
+      if (!isDraggingRef.current || !editorContentRef.current) return;
+      const rect = editorContentRef.current.getBoundingClientRect();
+      const percent = ((moveEvent.clientX - rect.left) / rect.width) * 100;
+      setSplitPercent(Math.min(80, Math.max(20, percent)));
+    };
+
+    const onMouseUp = () => {
+      isDraggingRef.current = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, []);
+
   // Handle Tab key in textarea for indentation
   const handleKeyDown = (e) => {
     if (e.key === 'Tab') {
@@ -110,9 +138,9 @@ export default function Editor({ storageKey, initialCode, theme }) {
         onPublish={handlePublish}
         onClose={handleClose}
       />
-      <div className={`editor-content view-${viewMode}`}>
+      <div className={`editor-content view-${viewMode}`} ref={editorContentRef}>
         {viewMode !== 'graph' && (
-          <div className="editor-pane">
+          <div className="editor-pane" style={viewMode === 'both' ? { width: `${splitPercent}%` } : undefined}>
             <textarea
               ref={textareaRef}
               className="code-textarea"
@@ -124,9 +152,13 @@ export default function Editor({ storageKey, initialCode, theme }) {
             />
           </div>
         )}
+        {viewMode === 'both' && (
+          <div className="split-divider" onMouseDown={handleDividerMouseDown} />
+        )}
         {viewMode !== 'code' && (
           <div
             className="preview-pane"
+            style={viewMode === 'both' ? { width: `${100 - splitPercent}%` } : undefined}
             ref={panZoom.containerRef}
             onMouseDown={panZoom.onMouseDown}
             onMouseMove={panZoom.onMouseMove}
