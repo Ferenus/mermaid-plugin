@@ -991,18 +991,40 @@ body {
 
 .template-confirm {
   text-align: center;
+  padding: 0;
+}
+
+.template-preview {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   padding: 16px;
+  margin-bottom: 12px;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.template-preview .mermaid-renderer {
+  display: flex;
+  justify-content: center;
+}
+
+.template-preview .mermaid-container svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .template-confirm p {
   margin: 8px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 .template-confirm-actions {
   display: flex;
   gap: 8px;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 /* Help */

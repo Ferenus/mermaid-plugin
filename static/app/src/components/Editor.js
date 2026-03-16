@@ -225,6 +225,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
         <TemplatesPanel
           onSelect={handleTemplateSelect}
           onClose={() => setShowTemplates(false)}
+          theme={theme}
         />
       )}
       {showHelp && <HelpPanel onClose={() => setShowHelp(false)} />}

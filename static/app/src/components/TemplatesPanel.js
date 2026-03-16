@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import templates from '../templates';
+import MermaidRenderer from './MermaidRenderer';
 
-export default function TemplatesPanel({ onSelect, onClose }) {
+export default function TemplatesPanel({ onSelect, onClose, theme }) {
   const [confirming, setConfirming] = useState(null);
 
   const handleSelect = (template) => {
@@ -17,19 +18,21 @@ export default function TemplatesPanel({ onSelect, onClose }) {
 
   return (
     <div className="panel-overlay" onClick={onClose}>
-      <div className="panel" onClick={(e) => e.stopPropagation()}>
+      <div className={`panel${confirming ? '' : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className="panel-header">
-          <h3>Diagram Templates</h3>
+          <h3>{confirming ? confirming.name : 'Diagram Templates'}</h3>
           <button className="panel-close" onClick={onClose}>x</button>
         </div>
         <div className="panel-body">
           {confirming ? (
             <div className="template-confirm">
-              <p>This will replace your current diagram with the <strong>{confirming.name}</strong> template.</p>
-              <p>You can use Ctrl+Z to undo this action.</p>
+              <div className="template-preview">
+                <MermaidRenderer code={confirming.code} theme={theme} />
+              </div>
+              <p>This will replace your current diagram. You can use Ctrl+Z to undo.</p>
               <div className="template-confirm-actions">
                 <button className="toolbar-btn" onClick={handleConfirm}>Replace</button>
-                <button className="toolbar-btn" onClick={() => setConfirming(null)}>Cancel</button>
+                <button className="toolbar-btn" onClick={() => setConfirming(null)}>Back</button>
               </div>
             </div>
           ) : (
