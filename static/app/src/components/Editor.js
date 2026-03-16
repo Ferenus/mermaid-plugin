@@ -22,11 +22,22 @@ export default function Editor({ storageKey, initialCode, theme }) {
   const [showHelp, setShowHelp] = useState(false);
   const [history, setHistory] = useState([]);
   const [splitPercent, setSplitPercent] = useState(50);
+  const [activeLine, setActiveLine] = useState(-1);
   const saveTimerRef = useRef(null);
   const editorContentRef = useRef(null);
   const isDraggingRef = useRef(false);
   const gutterRef = useRef(null);
+  const editorPaneRef = useRef(null);
   const panZoom = usePanZoom();
+
+  const updateActiveLine = useCallback(() => {
+    if (!editorPaneRef.current) return;
+    const textarea = editorPaneRef.current.querySelector('textarea');
+    if (!textarea) return;
+    const pos = textarea.selectionStart;
+    const line = textarea.value.substring(0, pos).split('\n').length - 1;
+    setActiveLine(line);
+  }, []);
 
   useEffect(() => {
     setCode(initialCode);
@@ -127,33 +138,40 @@ export default function Editor({ storageKey, initialCode, theme }) {
       />
       <div className={`editor-content view-${viewMode}`} ref={editorContentRef}>
         {viewMode !== 'graph' && (
-          <div className="editor-pane" style={viewMode === 'both' ? { width: `${splitPercent}%` } : undefined}>
+          <div className="editor-pane" style={viewMode === 'both' ? { width: `${splitPercent}%` } : undefined} ref={editorPaneRef}>
             <div className="line-gutter" ref={gutterRef}>
               {code.split('\n').map((_, i) => (
-                <div key={i} className="line-number">{i + 1}</div>
+                <div key={i} className={`line-number${i === activeLine ? ' active' : ''}`}>{i + 1}</div>
               ))}
             </div>
-            <SimpleEditor
-              value={code}
-              onValueChange={handleCodeChange}
-              highlight={highlight}
-              padding={12}
-              className="code-editor"
-              style={{
-                fontFamily: "'SF Mono', 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace",
-                fontSize: 14,
-                lineHeight: 1.5,
-                flex: 1,
-                minWidth: 0,
-                height: '100%',
-                overflow: 'auto',
-              }}
-              onScroll={(e) => {
-                if (gutterRef.current) {
-                  gutterRef.current.scrollTop = e.target.scrollTop;
-                }
-              }}
-            />
+            <div className="code-editor-wrap">
+              {activeLine >= 0 && (
+                <div
+                  className="line-highlight"
+                  style={{ top: 12 + activeLine * 21 }}
+                />
+              )}
+              <SimpleEditor
+                value={code}
+                onValueChange={handleCodeChange}
+                highlight={highlight}
+                padding={12}
+                className="code-editor"
+                style={{
+                  fontFamily: "'SF Mono', 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace",
+                  fontSize: 14,
+                  lineHeight: 1.5,
+                }}
+                onClick={updateActiveLine}
+                onKeyUp={updateActiveLine}
+                onBlur={() => setActiveLine(-1)}
+                onScroll={(e) => {
+                  if (gutterRef.current) {
+                    gutterRef.current.scrollTop = e.target.scrollTop;
+                  }
+                }}
+              />
+            </div>
           </div>
         )}
         {viewMode === 'both' && (

@@ -188,8 +188,10 @@ body {
 
 /* Code editor (react-simple-code-editor) */
 .code-editor {
-  background: var(--bg-primary);
+  background: transparent;
   color: var(--text-primary);
+  position: relative;
+  z-index: 1;
 }
 
 .code-editor:focus-within,
@@ -199,6 +201,27 @@ body {
   outline: none !important;
   box-shadow: none !important;
   border-color: transparent !important;
+}
+
+/* Code editor wrapper */
+.code-editor-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: auto;
+  background: var(--bg-primary);
+}
+
+/* Active line highlight */
+.line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 21px;
+  background: var(--bg-tertiary);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Line number gutter */
@@ -219,6 +242,11 @@ body {
   line-height: 1.5;
   color: var(--text-secondary);
   opacity: 0.5;
+}
+
+.line-number.active {
+  opacity: 1;
+  color: var(--text-primary);
 }
 
 /* Prism syntax highlighting tokens */
@@ -250,7 +278,6 @@ body {
 
 /* Dark theme Prism overrides */
 [data-theme="dark"] .code-editor {
-  background: var(--bg-primary);
   color: var(--text-primary);
 }
 
