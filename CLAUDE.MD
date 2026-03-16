@@ -1,5 +1,5 @@
 # Corporate proxy blocking the domain
-*.cdn.prod.atlassian-dev.net domain is blocked by corporate proxy. Use forge tunnel to test the changes, it should work fine when served from localhost.
+*.cdn.prod.atlassian-dev.net domain is blocked by corporate proxy. Use forge tunnel to test the changes. It requires not using the CDN for local testing.
 
 # Testing the changes
 

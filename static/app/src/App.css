@@ -185,24 +185,68 @@ body {
   background: var(--accent-color);
 }
 
-.code-textarea {
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  resize: none;
-  padding: 12px;
-  font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
-  font-size: 14px;
-  line-height: 1.5;
+/* Code editor (react-simple-code-editor) */
+.code-editor {
   background: var(--bg-primary);
   color: var(--text-primary);
-  tab-size: 2;
 }
 
-.code-textarea::placeholder {
-  color: var(--text-secondary);
+/* Prism syntax highlighting tokens */
+.code-editor .token.comment {
+  color: #6a737d;
   font-style: italic;
+}
+
+.code-editor .token.keyword {
+  color: #d73a49;
+  font-weight: 600;
+}
+
+.code-editor .token.string {
+  color: #032f62;
+}
+
+.code-editor .token.operator {
+  color: #e36209;
+}
+
+.code-editor .token.number {
+  color: #005cc5;
+}
+
+.code-editor .token.punctuation {
+  color: #586069;
+}
+
+/* Dark theme Prism overrides */
+[data-theme="dark"] .code-editor {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .code-editor .token.comment {
+  color: #6b737c;
+}
+
+[data-theme="dark"] .code-editor .token.keyword {
+  color: #f97583;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .code-editor .token.string {
+  color: #9ecbff;
+}
+
+[data-theme="dark"] .code-editor .token.operator {
+  color: #ffab70;
+}
+
+[data-theme="dark"] .code-editor .token.number {
+  color: #79b8ff;
+}
+
+[data-theme="dark"] .code-editor .token.punctuation {
+  color: #8b949e;
 }
 
 .preview-pane {

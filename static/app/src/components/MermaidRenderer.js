@@ -16,6 +16,7 @@ export default function MermaidRenderer({ code, theme }) {
       return;
     }
 
+    const id = `mermaid-diagram-${++renderCounter}`;
     try {
       mermaid.initialize({
         startOnLoad: false,
@@ -36,13 +37,15 @@ export default function MermaidRenderer({ code, theme }) {
         },
       });
 
-      const id = `mermaid-diagram-${++renderCounter}`;
       const { svg } = await mermaid.render(id, diagramCode);
       if (containerRef.current) {
         containerRef.current.innerHTML = svg;
         setError(null);
       }
     } catch (err) {
+      // Mermaid v11 inserts an error SVG into the DOM on failure — clean it up
+      const errSvg = document.getElementById(id);
+      if (errSvg) errSvg.remove();
       setError(err.message || 'Invalid Mermaid syntax');
       // Keep last valid render in container
     }
