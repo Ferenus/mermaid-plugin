@@ -4,6 +4,7 @@ import Toolbar from './Toolbar';
 import HistoryPanel from './HistoryPanel';
 import TemplatesPanel from './TemplatesPanel';
 import HelpPanel from './HelpPanel';
+import ZoomControls from './ZoomControls';
 import usePanZoom from '../hooks/usePanZoom';
 import { invoke, view, events } from '@forge/bridge';
 
@@ -123,7 +124,6 @@ export default function Editor({ storageKey, initialCode, theme }) {
             onMouseMove={panZoom.onMouseMove}
             onMouseUp={panZoom.onMouseUp}
             onMouseLeave={panZoom.onMouseUp}
-            onWheel={panZoom.onWheel}
           >
             <div
               className="preview-inner"
@@ -134,6 +134,11 @@ export default function Editor({ storageKey, initialCode, theme }) {
             >
               <MermaidRenderer code={code} theme={theme} />
             </div>
+            <ZoomControls
+              onResetZoom={panZoom.resetZoom}
+              onZoomOut={panZoom.zoomOut}
+              onZoomIn={panZoom.zoomIn}
+            />
           </div>
         )}
       </div>

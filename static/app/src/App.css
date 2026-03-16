@@ -215,10 +215,77 @@ body {
   word-break: break-word;
 }
 
+/* Zoom Controls (pill) */
+.zoom-controls {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 2px 4px;
+  z-index: 10;
+}
+
+.preview-pane .zoom-controls {
+  top: 12px;
+  right: 12px;
+}
+
+.viewer-root .zoom-controls {
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.viewer-root:hover .zoom-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.zoom-btn {
+  background: none;
+  border: none;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 16px;
+  line-height: 1.4;
+}
+
+.zoom-btn:hover {
+  background: var(--bg-tertiary);
+}
+
+.zoom-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-color);
+  flex-shrink: 0;
+}
+
 /* Viewer (inline on page) */
 .viewer-root {
   width: 100%;
   padding: 8px;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.viewer-root:active {
+  cursor: grabbing;
+}
+
+.viewer-inner {
+  /* pan/zoom target */
 }
 
 .viewer-root .mermaid-container svg {

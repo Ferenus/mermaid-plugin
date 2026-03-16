@@ -35,15 +35,6 @@ export default function usePanZoom() {
     setTransform({ x: 0, y: 0, scale: 1 });
   }, []);
 
-  const onWheel = useCallback((e) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    setTransform((prev) => ({
-      ...prev,
-      scale: Math.min(Math.max(prev.scale + delta, 0.25), 5),
-    }));
-  }, []);
-
   return {
     containerRef,
     transform,
@@ -53,6 +44,5 @@ export default function usePanZoom() {
     onMouseDown,
     onMouseMove,
     onMouseUp,
-    onWheel,
   };
 }

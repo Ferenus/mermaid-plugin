@@ -20,7 +20,15 @@ https://ferenus.atlassian.net/wiki/spaces/~557058ba074e25a30649a4979214faf31ba8a
 
 Above URL request requires accepting iframes in Chrome.
 
-To open the code editor (edit plugin view) you have to mouse hover on the macro plugin and click on the "Mermaid Diagrams for Confluence (Development)" which appear and next click on the edit icon.
+To open the code editor (edit plugin view) via Chrome DevTools MCP:
+1. Take a snapshot of the page to find the macro iframe area
+2. Look for the "Edit" button (it's in the floating toolbar controls that appear when the macro is selected — the macro is auto-selected on page load in edit mode)
+3. Click the "Edit" button — this opens the full-screen config dialog with the code editor
+4. The config dialog loads in a separate iframe on port 8001 (via forge tunnel). Its elements will appear with a new uid prefix (e.g., uid=2_*) in the snapshot
+
+To test the published viewer (non-edit mode), navigate to the page view URL:
+https://ferenus.atlassian.net/wiki/spaces/~557058ba074e25a30649a4979214faf31ba8a7/pages/2654221/Test+page
+Note: You may need to click "Update" in the edit view first to publish changes.
 
 ### 6. Connect to the browser on port 9222 and find the tab with Confluence.
 
