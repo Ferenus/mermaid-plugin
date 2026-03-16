@@ -25,7 +25,7 @@ export default function usePanZoom() {
     if (!dragging.current) return;
     dragging.current = false;
 
-    // Animate placement back if the diagram is dragged completely out of bounds
+    // Clamp placement so the diagram doesn't leave empty gaps
     const container = containerRef.current;
     if (!container) return;
     const inner = container.querySelector('.preview-inner, .viewer-inner');
@@ -34,23 +34,40 @@ export default function usePanZoom() {
     const cRect = container.getBoundingClientRect();
     const iRect = inner.getBoundingClientRect();
 
-    const outOfBounds =
-      iRect.right < cRect.left ||
-      iRect.left > cRect.right ||
-      iRect.bottom < cRect.top ||
-      iRect.top > cRect.bottom;
+    let dx = 0;
+    let dy = 0;
 
-    if (outOfBounds) {
-      animating.current = true;
-      inner.style.transition = 'transform 0.3s ease-out';
-      setTransform((prev) => ({ ...prev, x: 0, y: 0 }));
-      const onEnd = () => {
-        inner.style.transition = '';
-        animating.current = false;
-        inner.removeEventListener('transitionend', onEnd);
-      };
-      inner.addEventListener('transitionend', onEnd);
+    if (iRect.width <= cRect.width) {
+      // Diagram fits horizontally — keep it inside
+      if (iRect.left < cRect.left) dx = cRect.left - iRect.left;
+      else if (iRect.right > cRect.right) dx = cRect.right - iRect.right;
+    } else {
+      // Diagram wider than viewport — don't allow gaps at edges
+      if (iRect.left > cRect.left) dx = cRect.left - iRect.left;
+      else if (iRect.right < cRect.right) dx = cRect.right - iRect.right;
     }
+
+    if (iRect.height <= cRect.height) {
+      // Diagram fits vertically — keep it inside
+      if (iRect.top < cRect.top) dy = cRect.top - iRect.top;
+      else if (iRect.bottom > cRect.bottom) dy = cRect.bottom - iRect.bottom;
+    } else {
+      // Diagram taller than viewport — don't allow gaps at edges
+      if (iRect.top > cRect.top) dy = cRect.top - iRect.top;
+      else if (iRect.bottom < cRect.bottom) dy = cRect.bottom - iRect.bottom;
+    }
+
+    if (dx === 0 && dy === 0) return;
+
+    animating.current = true;
+    inner.style.transition = 'transform 0.3s ease-out';
+    setTransform((prev) => ({ ...prev, x: prev.x + dx, y: prev.y + dy }));
+    const onEnd = () => {
+      inner.style.transition = '';
+      animating.current = false;
+      inner.removeEventListener('transitionend', onEnd);
+    };
+    inner.addEventListener('transitionend', onEnd);
   }, []);
 
   const zoomIn = useCallback(() => {
