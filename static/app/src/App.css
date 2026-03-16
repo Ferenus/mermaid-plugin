@@ -192,6 +192,15 @@ body {
   color: var(--text-primary);
 }
 
+.code-editor:focus-within,
+.code-editor:focus,
+.code-editor textarea,
+.code-editor textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
 /* Line number gutter */
 .line-gutter {
   padding: 12px 0;
