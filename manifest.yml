@@ -22,6 +22,9 @@ permissions:
   scopes:
     - storage:app
     - read:confluence-content.all
+  content:
+    styles:
+      - 'unsafe-inline'
 app:
   runtime:
     name: nodejs24.x
