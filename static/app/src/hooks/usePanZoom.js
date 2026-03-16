@@ -70,13 +70,31 @@ export default function usePanZoom() {
     inner.addEventListener('transitionend', onEnd);
   }, []);
 
-  const zoomIn = useCallback(() => {
-    setTransform((prev) => ({ ...prev, scale: Math.min(prev.scale + 0.25, 5) }));
+  const zoomTo = useCallback((getNewScale) => {
+    const container = containerRef.current;
+    setTransform((prev) => {
+      const newScale = getNewScale(prev.scale);
+      if (newScale === prev.scale) return prev;
+      if (!container) return { ...prev, scale: newScale };
+      const cRect = container.getBoundingClientRect();
+      const cx = cRect.width / 2;
+      const cy = cRect.height / 2;
+      const ratio = newScale / prev.scale;
+      return {
+        scale: newScale,
+        x: cx - ratio * (cx - prev.x),
+        y: cy - ratio * (cy - prev.y),
+      };
+    });
   }, []);
 
+  const zoomIn = useCallback(() => {
+    zoomTo((s) => Math.min(s + 0.25, 5));
+  }, [zoomTo]);
+
   const zoomOut = useCallback(() => {
-    setTransform((prev) => ({ ...prev, scale: Math.max(prev.scale - 0.25, 0.25) }));
-  }, []);
+    zoomTo((s) => Math.max(s - 0.25, 0.25));
+  }, [zoomTo]);
 
   const resetZoom = useCallback(() => {
     setTransform({ x: 0, y: 0, scale: 1 });

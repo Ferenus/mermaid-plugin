@@ -319,11 +319,17 @@ body {
 
 .preview-inner {
   padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
 }
 
 /* Mermaid Renderer */
 .mermaid-renderer {
   position: relative;
+  width: 100%;
 }
 
 .mermaid-container {
@@ -426,7 +432,11 @@ body {
 }
 
 .viewer-inner {
-  /* pan/zoom target */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
 }
 
 .viewer-root .mermaid-container svg {
