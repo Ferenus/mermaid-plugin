@@ -25,7 +25,7 @@ forge tunnel -e development
 
 ## 4. Launch chrome
 `
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --ignore-certificate-errors --user-data-dir="/Users/dstradowski/Library/Application Support/Google/Chrome" --profile-directory="Default" --disable-web-security --disable-site-isolation-trials --disable-features=IsolateOrigins,site-per-process
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir="/Users/dstradowski/Library/Application Support/Google/Chrome" --profile-directory="Default"
 `
 
 ## 5. Open the Confluence page with the component inserted

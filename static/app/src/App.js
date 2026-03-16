@@ -32,6 +32,9 @@ function App() {
     );
 
     Promise.race([view.getContext(), contextTimeout]).then((ctx) => {
+      console.log('[MERMAID DEBUG] context:', JSON.stringify(ctx));
+      console.log('[MERMAID DEBUG] extension.type:', ctx?.extension?.type);
+      console.log('[MERMAID DEBUG] port:', window.location.port);
       setContext(ctx);
 
       // Determine theme from context
