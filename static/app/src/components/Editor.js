@@ -71,14 +71,24 @@ export default function Editor({ storageKey, initialCode, theme }) {
     setShowHistory(true);
   };
 
+  const replaceCodeViaTextarea = useCallback((newCode) => {
+    const textarea = editorPaneRef.current?.querySelector('textarea');
+    if (textarea) {
+      textarea.focus();
+      textarea.select();
+      document.execCommand('insertText', false, newCode);
+    } else {
+      setCode(newCode);
+    }
+    saveToBackend(newCode);
+  }, [saveToBackend]);
+
   const handleRestore = (restoredCode) => {
-    setCode(restoredCode);
-    saveToBackend(restoredCode);
+    replaceCodeViaTextarea(restoredCode);
   };
 
   const handleTemplateSelect = (templateCode) => {
-    setCode(templateCode);
-    saveToBackend(templateCode);
+    replaceCodeViaTextarea(templateCode);
   };
 
   const handleClose = () => {
