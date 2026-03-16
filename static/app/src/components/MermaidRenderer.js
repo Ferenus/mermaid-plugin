@@ -22,19 +22,6 @@ export default function MermaidRenderer({ code, theme }) {
         startOnLoad: false,
         theme: theme === 'dark' ? 'dark' : 'default',
         securityLevel: 'strict',
-        fontFamily: '"trebuchet ms", verdana, arial, sans-serif',
-        fontSize: 16,
-        htmlLabels: true,
-        flowchart: {
-          htmlLabels: true,
-          curve: 'basis',
-          padding: 15,
-        },
-        sequence: {
-          actorFontFamily: '"trebuchet ms", verdana, arial, sans-serif',
-          noteFontFamily: '"trebuchet ms", verdana, arial, sans-serif',
-          messageFontFamily: '"trebuchet ms", verdana, arial, sans-serif',
-        },
       });
 
       const { svg } = await mermaid.render(id, diagramCode);
