@@ -197,6 +197,405 @@ body {
   height: auto;
 }
 
+/*
+ * Mermaid theme styles — replicate the default/dark mermaid themes here
+ * because the Forge iframe CSP blocks dynamic <style> elements, so the
+ * SVG-embedded styles mermaid generates are never applied by the browser.
+ * Values taken from the mermaid "default" and "dark" built-in themes.
+ */
+
+/* --- Light theme (default) --- */
+/* Note: Do NOT set font-family or font-size here — mermaid sizes node
+   boxes during render() using its configured font. Overriding the font
+   in CSS causes text to overflow the pre-calculated boxes. */
+.mermaid-container svg {
+  fill: #333;
+}
+
+/* Flowchart nodes */
+.mermaid-container .node rect,
+.mermaid-container .node circle,
+.mermaid-container .node ellipse,
+.mermaid-container .node polygon,
+.mermaid-container .node path {
+  fill: #ECECFF;
+  stroke: #9370DB;
+  stroke-width: 1px;
+}
+
+.mermaid-container .node .label {
+  text-align: center;
+}
+
+.mermaid-container .node .label text,
+.mermaid-container .label text,
+.mermaid-container span {
+  fill: #333;
+  color: #333;
+}
+
+/* Edges */
+.mermaid-container .edgePath .path {
+  stroke: #333333;
+  stroke-width: 2.0px;
+}
+
+.mermaid-container .flowchart-link {
+  stroke: #333333;
+  fill: none;
+}
+
+.mermaid-container .marker {
+  fill: #333333;
+  stroke: #333333;
+}
+
+.mermaid-container .arrowheadPath {
+  fill: #333333;
+}
+
+/* Edge labels */
+.mermaid-container .edgeLabel {
+  background-color: rgba(232, 232, 232, 0.8);
+  text-align: center;
+}
+
+.mermaid-container .edgeLabel p {
+  background-color: rgba(232, 232, 232, 0.8);
+}
+
+.mermaid-container .edgeLabel rect {
+  opacity: 0.5;
+  background-color: rgba(232, 232, 232, 0.8);
+  fill: rgba(232, 232, 232, 0.8);
+}
+
+.mermaid-container .labelBkg {
+  background-color: rgba(232, 232, 232, 0.5);
+}
+
+/* Clusters / subgraphs */
+.mermaid-container .cluster rect {
+  fill: #ffffde;
+  stroke: #aaaa33;
+  stroke-width: 1px;
+}
+
+.mermaid-container .cluster text {
+  fill: #333;
+}
+
+/* Edge thickness */
+.mermaid-container .edge-thickness-normal {
+  stroke-width: 1px;
+}
+
+.mermaid-container .edge-thickness-thick {
+  stroke-width: 3.5px;
+}
+
+.mermaid-container .edge-pattern-solid {
+  stroke-dasharray: 0;
+}
+
+.mermaid-container .edge-pattern-dashed {
+  stroke-dasharray: 3;
+}
+
+.mermaid-container .edge-pattern-dotted {
+  stroke-dasharray: 2;
+}
+
+/* Sequence diagram */
+.mermaid-container .actor {
+  fill: #ECECFF;
+  stroke: #9370DB;
+}
+
+.mermaid-container text.actor > tspan {
+  fill: #333;
+  stroke: none;
+}
+
+.mermaid-container .actor-line {
+  stroke: #999;
+}
+
+.mermaid-container .messageLine0,
+.mermaid-container .messageLine1 {
+  stroke-width: 1.5;
+  stroke-dasharray: none;
+  stroke: #333;
+}
+
+.mermaid-container .messageText {
+  fill: #333;
+  stroke: none;
+  font-size: 16px;
+}
+
+.mermaid-container .labelBox {
+  stroke: #9370DB;
+  fill: #ECECFF;
+}
+
+.mermaid-container .labelText,
+.mermaid-container .labelText > tspan {
+  fill: #333;
+  stroke: none;
+}
+
+.mermaid-container .loopText,
+.mermaid-container .loopText > tspan {
+  fill: #333;
+  stroke: none;
+}
+
+.mermaid-container .loopLine {
+  stroke-width: 2px;
+  stroke-dasharray: 2, 2;
+  stroke: #9370DB;
+}
+
+.mermaid-container .note {
+  fill: #ffc;
+  stroke: #aaaa33;
+}
+
+.mermaid-container .noteText,
+.mermaid-container .noteText > tspan {
+  fill: #333;
+  stroke: none;
+}
+
+.mermaid-container #arrowhead path {
+  fill: #333;
+  stroke: #333;
+}
+
+/* Activation box */
+.mermaid-container .activation0,
+.mermaid-container .activation1,
+.mermaid-container .activation2 {
+  fill: #f4f4f4;
+  stroke: #666;
+}
+
+/* Pie chart */
+.mermaid-container .pieCircle {
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+/* State diagram */
+.mermaid-container .stateGroup .composit {
+  fill: #fff;
+}
+
+.mermaid-container .stateGroup rect {
+  fill: #ECECFF;
+  stroke: #9370DB;
+}
+
+.mermaid-container .stateGroup text {
+  fill: #333;
+}
+
+/* Class diagram */
+.mermaid-container g.classGroup rect {
+  fill: #ECECFF;
+  stroke: #9370DB;
+}
+
+.mermaid-container g.classGroup text {
+  fill: #333;
+  stroke: none;
+}
+
+.mermaid-container .classLabel .box {
+  fill: #ECECFF;
+  stroke: #9370DB;
+}
+
+.mermaid-container .classLabel .label {
+  fill: #333;
+}
+
+.mermaid-container .relation {
+  stroke: #333333;
+  stroke-width: 1;
+}
+
+/* Gantt */
+.mermaid-container .sectionTitle {
+  fill: #333;
+}
+
+/* Title */
+.mermaid-container .flowchartTitleText {
+  text-anchor: middle;
+  font-size: 18px;
+  fill: #333;
+}
+
+/* Tooltip */
+.mermaid-container div.mermaidTooltip {
+  position: absolute;
+  text-align: center;
+  max-width: 200px;
+  padding: 2px;
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+  font-size: 12px;
+  background: hsl(80, 100%, 96.3%);
+  border: 1px solid #aaaa33;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* --- Dark theme overrides --- */
+[data-theme="dark"] .mermaid-container svg {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .node rect,
+[data-theme="dark"] .mermaid-container .node circle,
+[data-theme="dark"] .mermaid-container .node ellipse,
+[data-theme="dark"] .mermaid-container .node polygon,
+[data-theme="dark"] .mermaid-container .node path {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .node .label text,
+[data-theme="dark"] .mermaid-container .label text,
+[data-theme="dark"] .mermaid-container span {
+  fill: #ccc;
+  color: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .edgePath .path,
+[data-theme="dark"] .mermaid-container .flowchart-link {
+  stroke: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .marker,
+[data-theme="dark"] .mermaid-container .arrowheadPath {
+  fill: #ccc;
+  stroke: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .edgeLabel {
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+[data-theme="dark"] .mermaid-container .edgeLabel p {
+  background-color: rgba(30, 30, 30, 0.8);
+  color: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .edgeLabel rect {
+  fill: rgba(30, 30, 30, 0.8);
+}
+
+[data-theme="dark"] .mermaid-container .cluster rect {
+  fill: #2a2a2a;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .cluster text {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .actor {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container text.actor > tspan {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .actor-line {
+  stroke: #666;
+}
+
+[data-theme="dark"] .mermaid-container .messageLine0,
+[data-theme="dark"] .mermaid-container .messageLine1 {
+  stroke: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .messageText {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .labelBox {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .labelText,
+[data-theme="dark"] .mermaid-container .labelText > tspan,
+[data-theme="dark"] .mermaid-container .loopText,
+[data-theme="dark"] .mermaid-container .loopText > tspan {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .loopLine {
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .note {
+  fill: #3a3a3a;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .noteText,
+[data-theme="dark"] .mermaid-container .noteText > tspan {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container #arrowhead path {
+  fill: #ccc;
+  stroke: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .activation0,
+[data-theme="dark"] .mermaid-container .activation1,
+[data-theme="dark"] .mermaid-container .activation2 {
+  fill: #2a2a2a;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .stateGroup rect,
+[data-theme="dark"] .mermaid-container g.classGroup rect {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .stateGroup text,
+[data-theme="dark"] .mermaid-container g.classGroup text {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .classLabel .box {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .classLabel .label {
+  fill: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .relation {
+  stroke: #ccc;
+}
+
+[data-theme="dark"] .mermaid-container .flowchartTitleText,
+[data-theme="dark"] .mermaid-container .sectionTitle {
+  fill: #ccc;
+}
+
 .mermaid-placeholder {
   color: var(--text-secondary);
   font-style: italic;
