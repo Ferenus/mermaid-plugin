@@ -25,6 +25,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
   const saveTimerRef = useRef(null);
   const editorContentRef = useRef(null);
   const isDraggingRef = useRef(false);
+  const gutterRef = useRef(null);
   const panZoom = usePanZoom();
 
   useEffect(() => {
@@ -127,6 +128,11 @@ export default function Editor({ storageKey, initialCode, theme }) {
       <div className={`editor-content view-${viewMode}`} ref={editorContentRef}>
         {viewMode !== 'graph' && (
           <div className="editor-pane" style={viewMode === 'both' ? { width: `${splitPercent}%` } : undefined}>
+            <div className="line-gutter" ref={gutterRef}>
+              {code.split('\n').map((_, i) => (
+                <div key={i} className="line-number">{i + 1}</div>
+              ))}
+            </div>
             <SimpleEditor
               value={code}
               onValueChange={handleCodeChange}
@@ -137,9 +143,15 @@ export default function Editor({ storageKey, initialCode, theme }) {
                 fontFamily: "'SF Mono', 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace",
                 fontSize: 14,
                 lineHeight: 1.5,
-                width: '100%',
+                flex: 1,
+                minWidth: 0,
                 height: '100%',
                 overflow: 'auto',
+              }}
+              onScroll={(e) => {
+                if (gutterRef.current) {
+                  gutterRef.current.scrollTop = e.target.scrollTop;
+                }
               }}
             />
           </div>

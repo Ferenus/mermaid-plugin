@@ -170,6 +170,7 @@ body {
 .editor-pane {
   overflow: hidden;
   display: flex;
+  flex-direction: row;
 }
 
 .split-divider {
@@ -189,6 +190,26 @@ body {
 .code-editor {
   background: var(--bg-primary);
   color: var(--text-primary);
+}
+
+/* Line number gutter */
+.line-gutter {
+  padding: 12px 0;
+  text-align: right;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.line-number {
+  padding: 0 8px 0 12px;
+  font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  opacity: 0.5;
 }
 
 /* Prism syntax highlighting tokens */
