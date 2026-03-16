@@ -564,6 +564,82 @@ body {
   stroke-width: 1;
 }
 
+/* Mindmap */
+.mermaid-container .edge {
+  stroke-width: 3;
+  fill: none;
+}
+
+.mermaid-container .section-edge-0 { stroke: #0b0000; }
+.mermaid-container .section-edge-1 { stroke: #4d1037; }
+.mermaid-container .section-edge-2 { stroke: #3f5258; }
+.mermaid-container .section-edge-3 { stroke: #4f2f1b; }
+.mermaid-container .section-edge-4 { stroke: #6e0a0a; }
+.mermaid-container .section-edge-5 { stroke: #3b0048; }
+.mermaid-container .section-edge-6 { stroke: #995a01; }
+.mermaid-container .section-edge-7 { stroke: #154706; }
+
+.mermaid-container .edge-depth-0 { stroke-width: 17; }
+.mermaid-container .edge-depth-1 { stroke-width: 14; }
+.mermaid-container .edge-depth-2 { stroke-width: 11; }
+.mermaid-container .edge-depth-3 { stroke-width: 8; }
+.mermaid-container .edge-depth-4 { stroke-width: 5; }
+.mermaid-container .edge-depth-5 { stroke-width: 2; }
+
+.mermaid-container .section-root rect,
+.mermaid-container .section-root path,
+.mermaid-container .section-root circle,
+.mermaid-container .section-root polygon {
+  fill: #EE8E01;
+}
+
+.mermaid-container .section-root text {
+  fill: white;
+}
+
+.mermaid-container .section--1 rect,
+.mermaid-container .section--1 path,
+.mermaid-container .section--1 circle,
+.mermaid-container .section--1 polygon {
+  fill: #ECECFF;
+}
+
+.mermaid-container .section-0 rect,
+.mermaid-container .section-0 path,
+.mermaid-container .section-0 circle,
+.mermaid-container .section-0 polygon {
+  fill: #ECECFF;
+}
+
+.mermaid-container .section-1 rect,
+.mermaid-container .section-1 path,
+.mermaid-container .section-1 circle,
+.mermaid-container .section-1 polygon {
+  fill: #ffffde;
+}
+
+.mermaid-container .section-2 rect,
+.mermaid-container .section-2 path,
+.mermaid-container .section-2 circle,
+.mermaid-container .section-2 polygon {
+  fill: #bde0d8;
+}
+
+.mermaid-container .section-3 rect,
+.mermaid-container .section-3 path,
+.mermaid-container .section-3 circle,
+.mermaid-container .section-3 polygon {
+  fill: #e8dcc8;
+}
+
+.mermaid-container .mindmap-node-label {
+  dy: 1em;
+  alignment-baseline: middle;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  text-align: center;
+}
+
 /* Gantt */
 .mermaid-container .sectionTitle {
   fill: #333;
@@ -727,6 +803,72 @@ body {
 
 [data-theme="dark"] .mermaid-container .relation {
   stroke: #ccc;
+}
+
+/* Mindmap dark */
+[data-theme="dark"] .mermaid-container .edge {
+  stroke-width: 3;
+  fill: none;
+}
+
+[data-theme="dark"] .mermaid-container .section-edge-0 { stroke: #ccc; }
+[data-theme="dark"] .mermaid-container .section-edge-1 { stroke: #b07aa5; }
+[data-theme="dark"] .mermaid-container .section-edge-2 { stroke: #8bb5b0; }
+[data-theme="dark"] .mermaid-container .section-edge-3 { stroke: #c8a882; }
+[data-theme="dark"] .mermaid-container .section-edge-4 { stroke: #d88888; }
+[data-theme="dark"] .mermaid-container .section-edge-5 { stroke: #9e7cb8; }
+[data-theme="dark"] .mermaid-container .section-edge-6 { stroke: #d4a843; }
+[data-theme="dark"] .mermaid-container .section-edge-7 { stroke: #6bb86b; }
+
+[data-theme="dark"] .mermaid-container .section-root rect,
+[data-theme="dark"] .mermaid-container .section-root path,
+[data-theme="dark"] .mermaid-container .section-root circle,
+[data-theme="dark"] .mermaid-container .section-root polygon {
+  fill: #EE8E01;
+}
+
+[data-theme="dark"] .mermaid-container .section-root text {
+  fill: white;
+}
+
+[data-theme="dark"] .mermaid-container .section--1 rect,
+[data-theme="dark"] .mermaid-container .section--1 path,
+[data-theme="dark"] .mermaid-container .section--1 circle,
+[data-theme="dark"] .mermaid-container .section--1 polygon {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .section-0 rect,
+[data-theme="dark"] .mermaid-container .section-0 path,
+[data-theme="dark"] .mermaid-container .section-0 circle,
+[data-theme="dark"] .mermaid-container .section-0 polygon {
+  fill: #1f2020;
+  stroke: #81B1DB;
+}
+
+[data-theme="dark"] .mermaid-container .section-1 rect,
+[data-theme="dark"] .mermaid-container .section-1 path,
+[data-theme="dark"] .mermaid-container .section-1 circle,
+[data-theme="dark"] .mermaid-container .section-1 polygon {
+  fill: #2a2a1a;
+  stroke: #aaaa33;
+}
+
+[data-theme="dark"] .mermaid-container .section-2 rect,
+[data-theme="dark"] .mermaid-container .section-2 path,
+[data-theme="dark"] .mermaid-container .section-2 circle,
+[data-theme="dark"] .mermaid-container .section-2 polygon {
+  fill: #1a2a27;
+  stroke: #5f9e93;
+}
+
+[data-theme="dark"] .mermaid-container .section-3 rect,
+[data-theme="dark"] .mermaid-container .section-3 path,
+[data-theme="dark"] .mermaid-container .section-3 circle,
+[data-theme="dark"] .mermaid-container .section-3 polygon {
+  fill: #2a241a;
+  stroke: #b59a6e;
 }
 
 [data-theme="dark"] .mermaid-container .flowchartTitleText,
