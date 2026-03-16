@@ -61,6 +61,13 @@ export default function Editor({ storageKey, initialCode, theme }) {
     saveToBackend(templateCode);
   };
 
+  const handleClose = () => {
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+    }
+    view.close();
+  };
+
   const handlePublish = () => {
     // Ensure any pending save completes, then close the config dialog
     if (saveTimerRef.current) {
@@ -101,6 +108,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
         onOpenTemplates={() => setShowTemplates(true)}
         onOpenHelp={() => setShowHelp(true)}
         onPublish={handlePublish}
+        onClose={handleClose}
       />
       <div className={`editor-content view-${viewMode}`}>
         {viewMode !== 'graph' && (

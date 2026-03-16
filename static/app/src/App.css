@@ -68,6 +68,14 @@ body {
   flex-shrink: 0;
 }
 
+.toolbar-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-right: 8px;
+  align-self: center;
+}
+
 .toolbar-group {
   display: flex;
   gap: 4px;
@@ -104,6 +112,17 @@ body {
 .toolbar-btn.publish-btn:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
+}
+
+.toolbar-btn.close-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.toolbar-btn.close-btn:hover {
+  background: var(--hover-bg);
+  color: var(--text-primary);
 }
 
 /* Editor Layout (shown in fullscreen config dialog) */

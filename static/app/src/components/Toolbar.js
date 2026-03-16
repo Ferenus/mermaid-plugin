@@ -7,10 +7,12 @@ export default function Toolbar({
   onOpenTemplates,
   onOpenHelp,
   onPublish,
+  onClose,
 }) {
   return (
     <div className="toolbar">
       <div className="toolbar-group">
+        <span className="toolbar-title">Mermaid Editor</span>
         <button
           className={`toolbar-btn ${viewMode === 'code' ? 'active' : ''}`}
           onClick={() => onViewModeChange('code')}
@@ -45,6 +47,9 @@ export default function Toolbar({
         </button>
         <button className="toolbar-btn publish-btn" onClick={onPublish} title="Save and close editor">
           Publish
+        </button>
+        <button className="toolbar-btn close-btn" onClick={onClose} title="Close without publishing">
+          Close
         </button>
       </div>
     </div>
