@@ -3,7 +3,7 @@ import mermaid from 'mermaid';
 
 let renderCounter = 0;
 
-export default function MermaidRenderer({ code, theme }) {
+export default function MermaidRenderer({ code, theme, onRender }) {
   const containerRef = useRef(null);
   const [error, setError] = useState(null);
   const debounceRef = useRef(null);
@@ -28,6 +28,10 @@ export default function MermaidRenderer({ code, theme }) {
       if (containerRef.current) {
         containerRef.current.innerHTML = svg;
         setError(null);
+        if (onRender) {
+          const svgEl = containerRef.current.querySelector('svg');
+          if (svgEl) onRender(svgEl);
+        }
       }
     } catch (err) {
       // Mermaid v11 inserts an error SVG into the DOM on failure — clean it up

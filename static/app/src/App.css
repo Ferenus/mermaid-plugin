@@ -432,14 +432,12 @@ body {
 }
 
 .viewer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100%;
-  width: 100%;
 }
 
 .viewer-root .mermaid-container svg {
+  width: auto !important;
+  max-width: none !important;
   height: auto;
   display: block;
 }

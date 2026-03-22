@@ -100,12 +100,27 @@ export default function usePanZoom() {
     setTransform({ x: 0, y: 0, scale: 1 });
   }, []);
 
+  // Scale and center SVG content to fit the container width.
+  // Returns the scaled height so the caller can size the container.
+  const fitToView = useCallback((svgW, svgH) => {
+    const container = containerRef.current;
+    if (!container || !svgW || !svgH) return null;
+
+    const cW = container.clientWidth;
+    const scale = cW / svgW;
+    const scaledH = svgH * scale;
+
+    setTransform({ x: 0, y: 0, scale });
+    return { height: Math.ceil(scaledH) };
+  }, []);
+
   return {
     containerRef,
     transform,
     zoomIn,
     zoomOut,
     resetZoom,
+    fitToView,
     onMouseDown,
     onMouseMove,
     onMouseUp,
