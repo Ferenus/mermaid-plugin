@@ -329,15 +329,15 @@ body {
 /* Mermaid Renderer */
 .mermaid-renderer {
   position: relative;
-  width: 100%;
 }
 
 .mermaid-container {
   min-height: 100px;
+  display: flex;
+  justify-content: center;
 }
 
 .mermaid-container svg {
-  max-width: 100%;
   height: auto;
 }
 
@@ -440,7 +440,6 @@ body {
 }
 
 .viewer-root .mermaid-container svg {
-  max-width: 100%;
   height: auto;
   display: block;
 }
