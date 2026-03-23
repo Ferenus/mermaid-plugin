@@ -7,11 +7,13 @@ export default function Viewer({ code, theme }) {
   const panZoom = usePanZoom();
   const [contentHeight, setContentHeight] = useState(null);
   const svgDims = useRef(null);
+  const rootElRef = useRef(null);
+  const lastWidthRef = useRef(0);
 
-  const doFit = useCallback(() => {
+  const doFit = useCallback((containerWidth) => {
     if (!svgDims.current) return;
     const { w, h } = svgDims.current;
-    const result = panZoom.fitToView(w, h);
+    const result = panZoom.fitToView(w, h, containerWidth);
     if (result) {
       setContentHeight(result.height + 16);
     }
@@ -32,9 +34,8 @@ export default function Viewer({ code, theme }) {
     }
     if (!w || !h) return;
 
-    // Remove mermaid's width="100%" so the SVG renders at its natural
-    // viewBox size; fitToView handles scaling via CSS transform.
-    svgEl.removeAttribute('width');
+    // Remove mermaid's width="100%" and max-width so the SVG renders at
+    // its viewBox size; fitToView handles scaling via CSS transform.
     svgEl.style.removeProperty('max-width');
 
     // Mermaid mindmaps can generate content that overflows the viewBox.
@@ -46,15 +47,38 @@ export default function Viewer({ code, theme }) {
     w += pad * 2;
     h += pad * 2;
     svgEl.setAttribute('viewBox', `${vbX} ${vbY} ${w} ${h}`);
+    svgEl.setAttribute('width', w);
+    svgEl.setAttribute('height', h);
 
     svgDims.current = { w, h };
     doFit();
   }, [doFit]);
 
-  // Re-fit on window resize
+  // Merge refs for panZoom and our local ref
+  const setRootRef = useCallback((el) => {
+    rootElRef.current = el;
+    panZoom.containerRef.current = el;
+  }, [panZoom.containerRef]);
+
+  // Use ResizeObserver on the root element - fires after the element
+  // has actually been resized, unlike window.resize which can fire
+  // before the iframe layout updates.
   useEffect(() => {
-    window.addEventListener('resize', doFit);
-    return () => window.removeEventListener('resize', doFit);
+    const el = rootElRef.current;
+    if (!el) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const newWidth = entry.contentRect.width;
+      // Only refit if width actually changed (ignore height-only changes from our own setState)
+      if (Math.abs(newWidth - lastWidthRef.current) > 1) {
+        lastWidthRef.current = newWidth;
+        doFit(newWidth);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [doFit]);
 
   if (!code) {
@@ -68,7 +92,7 @@ export default function Viewer({ code, theme }) {
   return (
     <div
       className="viewer-root"
-      ref={panZoom.containerRef}
+      ref={setRootRef}
       style={contentHeight ? { height: contentHeight } : undefined}
       onMouseDown={panZoom.onMouseDown}
       onMouseMove={panZoom.onMouseMove}
@@ -85,7 +109,7 @@ export default function Viewer({ code, theme }) {
         <MermaidRenderer code={code} theme={theme} onRender={handleRender} />
       </div>
       <ZoomControls
-        onResetZoom={doFit}
+        onResetZoom={() => doFit()}
         onZoomOut={panZoom.zoomOut}
         onZoomIn={panZoom.zoomIn}
       />

@@ -100,15 +100,15 @@ export default function usePanZoom() {
     setTransform({ x: 0, y: 0, scale: 1 });
   }, []);
 
-  // Scale and center SVG content to fit the container width.
+  // Scale and center SVG content to fit the given container width.
+  // If containerWidth is not provided, reads from the DOM.
   // Returns the scaled height so the caller can size the container.
-  const fitToView = useCallback((svgW, svgH) => {
-    const container = containerRef.current;
-    if (!container || !svgW || !svgH) return null;
+  const fitToView = useCallback((svgW, svgH, containerWidth) => {
+    if (!svgW || !svgH) return null;
 
-    // Use documentElement width - container.clientWidth can be stale
-    // when the iframe is being resized by the host page
-    const cW = document.documentElement.clientWidth;
+    const cW = containerWidth || (containerRef.current && containerRef.current.clientWidth) || document.documentElement.clientWidth;
+    if (!cW) return null;
+
     const scale = cW / svgW;
     const scaledH = svgH * scale;
 

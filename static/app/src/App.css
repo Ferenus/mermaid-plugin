@@ -433,12 +433,11 @@ body {
 
 .viewer-inner {
   min-height: 100%;
+  width: max-content;
 }
 
 .viewer-root .mermaid-container svg {
-  width: auto !important;
   max-width: none !important;
-  height: auto;
   display: block;
 }
 
