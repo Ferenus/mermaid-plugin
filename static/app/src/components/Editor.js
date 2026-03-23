@@ -29,6 +29,66 @@ export default function Editor({ storageKey, initialCode, theme }) {
   const gutterRef = useRef(null);
   const editorPaneRef = useRef(null);
   const panZoom = usePanZoom();
+  const svgDimsRef = useRef(null);
+  const previewElRef = useRef(null);
+  const lastPreviewWidthRef = useRef(0);
+
+  const doPreviewFit = useCallback((containerWidth) => {
+    if (!svgDimsRef.current) return;
+    const { w, h } = svgDimsRef.current;
+    panZoom.fitToView(w, h, containerWidth);
+  }, [panZoom.fitToView]);
+
+  const handlePreviewRender = useCallback((svgEl) => {
+    const vb = svgEl.getAttribute('viewBox');
+    let w, h;
+    if (vb) {
+      const parts = vb.split(/[\s,]+/);
+      w = parseFloat(parts[2]);
+      h = parseFloat(parts[3]);
+    }
+    if (!w || !h) {
+      w = parseFloat(svgEl.getAttribute('width'));
+      h = parseFloat(svgEl.getAttribute('height'));
+    }
+    if (!w || !h) return;
+
+    svgEl.style.removeProperty('max-width');
+    const pad = 50;
+    const vbParts = (svgEl.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+    const vbX = (vbParts[0] || 0) - pad;
+    const vbY = (vbParts[1] || 0) - pad;
+    w += pad * 2;
+    h += pad * 2;
+    svgEl.setAttribute('viewBox', `${vbX} ${vbY} ${w} ${h}`);
+    svgEl.setAttribute('width', w);
+    svgEl.setAttribute('height', h);
+
+    svgDimsRef.current = { w, h };
+    doPreviewFit();
+  }, [doPreviewFit]);
+
+  // Re-fit preview on resize
+  useEffect(() => {
+    const el = previewElRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const newWidth = entry.contentRect.width;
+      if (Math.abs(newWidth - lastPreviewWidthRef.current) > 1) {
+        lastPreviewWidthRef.current = newWidth;
+        doPreviewFit(newWidth);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [doPreviewFit]);
+
+  const setPreviewRef = useCallback((el) => {
+    previewElRef.current = el;
+    panZoom.containerRef.current = el;
+  }, [panZoom.containerRef]);
 
   const updateActiveLine = useCallback(() => {
     if (!editorPaneRef.current) return;
@@ -191,7 +251,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
           <div
             className="preview-pane"
             style={viewMode === 'both' ? { width: `${100 - splitPercent}%` } : undefined}
-            ref={panZoom.containerRef}
+            ref={setPreviewRef}
             onMouseDown={panZoom.onMouseDown}
             onMouseMove={panZoom.onMouseMove}
             onMouseUp={panZoom.onMouseUp}
@@ -202,12 +262,13 @@ export default function Editor({ storageKey, initialCode, theme }) {
               style={{
                 transform: `translate(${panZoom.transform.x}px, ${panZoom.transform.y}px) scale(${panZoom.transform.scale})`,
                 transformOrigin: '0 0',
+                width: 'max-content',
               }}
             >
-              <MermaidRenderer code={code} theme={theme} />
+              <MermaidRenderer code={code} theme={theme} onRender={handlePreviewRender} />
             </div>
             <ZoomControls
-              onResetZoom={panZoom.resetZoom}
+              onResetZoom={() => doPreviewFit()}
               onZoomOut={panZoom.zoomOut}
               onZoomIn={panZoom.zoomIn}
             />

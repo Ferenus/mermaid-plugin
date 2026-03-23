@@ -319,11 +319,13 @@ body {
 
 .preview-inner {
   padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100%;
-  width: 100%;
+  width: max-content;
+}
+
+.preview-pane .mermaid-container svg {
+  max-width: none !important;
+  display: block;
 }
 
 /* Mermaid Renderer */
