@@ -106,7 +106,9 @@ export default function usePanZoom() {
     const container = containerRef.current;
     if (!container || !svgW || !svgH) return null;
 
-    const cW = container.clientWidth;
+    // Use documentElement width - container.clientWidth can be stale
+    // when the iframe is being resized by the host page
+    const cW = document.documentElement.clientWidth;
     const scale = cW / svgW;
     const scaledH = svgH * scale;
 
