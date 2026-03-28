@@ -587,6 +587,19 @@ body {
   margin: 8px 0;
 }
 
+.history-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0 4px;
+}
+
+.history-page-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
 /* Templates */
 .templates-grid-rows {
   display: flex;
