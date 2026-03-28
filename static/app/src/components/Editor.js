@@ -20,6 +20,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
   const [showHistory, setShowHistory] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const [history, setHistory] = useState([]);
   const [splitPercent, setSplitPercent] = useState(50);
   const [activeLine, setActiveLine] = useState(-1);
@@ -152,10 +153,23 @@ export default function Editor({ storageKey, initialCode, theme }) {
   };
 
   const handleClose = () => {
+    if (code !== initialCode) {
+      setShowCloseConfirm(true);
+      return;
+    }
     if (saveTimerRef.current) {
       clearTimeout(saveTimerRef.current);
     }
     view.close();
+  };
+
+  const handleConfirmClose = () => {
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+    }
+    invoke('saveDiagram', { key: storageKey, code: initialCode, savedBy: 'editor' })
+      .catch(console.error)
+      .finally(() => view.close());
   };
 
   const handlePublish = () => {
@@ -290,6 +304,22 @@ export default function Editor({ storageKey, initialCode, theme }) {
         />
       )}
       {showHelp && <HelpPanel onClose={() => setShowHelp(false)} />}
+      {showCloseConfirm && (
+        <div className="panel-overlay">
+          <div className="panel panel-small">
+            <div className="panel-header">
+              <h3>Unsaved changes</h3>
+            </div>
+            <div className="panel-body">
+              <p style={{ margin: '0 0 16px' }}>You have unpublished changes. Closing will discard them.</p>
+              <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                <button className="toolbar-btn" onClick={() => setShowCloseConfirm(false)}>Cancel</button>
+                <button className="toolbar-btn publish-btn" onClick={handleConfirmClose}>Discard & Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
