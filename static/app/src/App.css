@@ -276,34 +276,55 @@ body {
   color: #586069;
 }
 
+.code-editor .token.builtin {
+  color: #6f42c1;
+  font-style: italic;
+}
+
+.code-editor .token.important {
+  color: #e36209;
+  font-weight: 600;
+}
+
 /* Dark theme Prism overrides */
 [data-theme="dark"] .code-editor {
   color: var(--text-primary);
 }
 
 [data-theme="dark"] .code-editor .token.comment {
-  color: #6b737c;
+  color: #8b949e;
+  font-style: italic;
 }
 
 [data-theme="dark"] .code-editor .token.keyword {
-  color: #f97583;
+  color: #ff7b72;
   font-weight: 600;
 }
 
 [data-theme="dark"] .code-editor .token.string {
-  color: #9ecbff;
+  color: #a5d6ff;
 }
 
 [data-theme="dark"] .code-editor .token.operator {
-  color: #ffab70;
+  color: #ffa657;
 }
 
 [data-theme="dark"] .code-editor .token.number {
-  color: #79b8ff;
+  color: #79c0ff;
 }
 
 [data-theme="dark"] .code-editor .token.punctuation {
-  color: #8b949e;
+  color: #c9d1d9;
+}
+
+[data-theme="dark"] .code-editor .token.builtin {
+  color: #d2a8ff;
+  font-style: italic;
+}
+
+[data-theme="dark"] .code-editor .token.important {
+  color: #ffa657;
+  font-weight: 600;
 }
 
 .preview-pane {

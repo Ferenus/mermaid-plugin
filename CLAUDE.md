@@ -23,12 +23,12 @@ forge deploy -e development
 forge tunnel -e development
 `
 
-## 4. Launch chrome
+## 5. Launch chrome
 `
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir="/Users/dstradowski/Library/Application Support/Google/Chrome" --profile-directory="Default"
 `
 
-## 5. Open the Confluence page with the component inserted
+## 6. Open the Confluence page with the component inserted
 https://ferenus.atlassian.net/wiki/spaces/~557058ba074e25a30649a4979214faf31ba8a7/pages/edit-v2/2654221
 
 Above URL request requires accepting iframes in Chrome.
