@@ -587,15 +587,55 @@ body {
   margin: 8px 0;
 }
 
+.history-list-wrap {
+  transition: opacity 0.15s;
+}
+
+.history-list-wrap.history-loading {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 .history-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 12px 0 4px;
+  gap: 8px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border-color);
 }
 
-.history-page-info {
+.history-pages {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.history-page-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  min-width: 28px;
+}
+
+.history-page-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.history-page-btn.active {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+  font-weight: 600;
+}
+
+.history-page-ellipsis {
+  padding: 2px 4px;
   font-size: 13px;
   color: var(--text-secondary);
 }

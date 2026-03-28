@@ -12,23 +12,13 @@ export default function HelpPanel({ onClose }) {
           <ul className="help-links">
             <li>
               <a
-                href="https://mermaid.js.org/"
+                href="https://mermaid.js.org/syntax/flowchart.html"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Official Mermaid Documentation
               </a>
               <p>Learn about all supported diagram types and syntax.</p>
-            </li>
-            <li>
-              <a
-                href="https://mermaid.js.org/syntax/flowchart.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Flowchart Syntax Guide
-              </a>
-              <p>The most common diagram type - great starting point.</p>
             </li>
             <li>
               <a
@@ -45,9 +35,7 @@ export default function HelpPanel({ onClose }) {
             <h4>Tips</h4>
             <ul>
               <li>Use the Templates button to start with a pre-built diagram.</li>
-              <li>The diagram preview updates automatically as you type.</li>
               <li>Use Ctrl+Z / Cmd+Z to undo changes in the editor.</li>
-              <li>Your diagram is auto-saved as you edit.</li>
             </ul>
           </div>
         </div>
