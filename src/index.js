@@ -29,9 +29,14 @@ resolver.define('saveDiagram', async (req) => {
 });
 
 resolver.define('getHistory', async (req) => {
-  const { key } = req.payload;
+  const { key, page = 0, pageSize = 50 } = req.payload;
   const data = await kvs.get(key);
-  return data ? data.history : [];
+  if (!data || !data.history.length) return { items: [], total: 0 };
+
+  const history = [...data.history].reverse();
+  const start = page * pageSize;
+  const items = history.slice(start, start + pageSize);
+  return { items, total: history.length };
 });
 
 resolver.define('clearHistory', async (req) => {

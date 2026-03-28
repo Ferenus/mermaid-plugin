@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const PAGE_SIZE = 50;
 
-export default function HistoryPanel({ history, onRestore, onClose }) {
+export default function HistoryPanel({ fetchPage, onRestore, onClose }) {
   const [selected, setSelected] = useState(null);
   const [page, setPage] = useState(0);
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const reversedHistory = [...history].reverse();
-  const totalPages = Math.max(1, Math.ceil(reversedHistory.length / PAGE_SIZE));
-  const pageItems = reversedHistory.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchPage(page).then((result) => {
+      if (cancelled) return;
+      setItems(result.items);
+      setTotal(result.total);
+      setLoading(false);
+    }).catch(() => {
+      if (cancelled) return;
+      setItems([]);
+      setTotal(0);
+      setLoading(false);
+    });
+    return () => { cancelled = true; };
+  }, [page, fetchPage]);
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   return (
     <div className="panel-overlay" onClick={onClose}>
@@ -18,12 +36,14 @@ export default function HistoryPanel({ history, onRestore, onClose }) {
           <button className="panel-close" onClick={onClose}>x</button>
         </div>
         <div className="panel-body">
-          {reversedHistory.length === 0 ? (
+          {loading ? (
+            <p className="panel-empty">Loading...</p>
+          ) : items.length === 0 && page === 0 ? (
             <p className="panel-empty">No history yet. Publish your diagram to create history entries.</p>
           ) : (
             <>
               <ul className="history-list">
-                {pageItems.map((entry, i) => {
+                {items.map((entry, i) => {
                   const globalIndex = page * PAGE_SIZE + i;
                   return (
                     <li

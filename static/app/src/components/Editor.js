@@ -21,7 +21,6 @@ export default function Editor({ storageKey, initialCode, theme }) {
   const [showTemplates, setShowTemplates] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
-  const [history, setHistory] = useState([]);
   const [splitPercent, setSplitPercent] = useState(50);
   const [activeLine, setActiveLine] = useState(-1);
   const saveTimerRef = useRef(null);
@@ -121,14 +120,12 @@ export default function Editor({ storageKey, initialCode, theme }) {
     saveToBackend(newCode);
   }, [saveToBackend]);
 
-  const handleOpenHistory = async () => {
-    try {
-      const h = await invoke('getHistory', { key: storageKey });
-      setHistory(h || []);
-    } catch (err) {
-      console.error('Failed to load history:', err);
-      setHistory([]);
-    }
+  const fetchHistoryPage = useCallback(async (page) => {
+    const result = await invoke('getHistory', { key: storageKey, page });
+    return result || { items: [], total: 0 };
+  }, [storageKey]);
+
+  const handleOpenHistory = () => {
     setShowHistory(true);
   };
 
@@ -291,7 +288,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
       </div>
       {showHistory && (
         <HistoryPanel
-          history={history}
+          fetchPage={fetchHistoryPage}
           onRestore={handleRestore}
           onClose={() => setShowHistory(false)}
         />
