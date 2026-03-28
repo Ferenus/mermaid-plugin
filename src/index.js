@@ -10,16 +10,18 @@ resolver.define('getDiagram', async (req) => {
 });
 
 resolver.define('saveDiagram', async (req) => {
-  const { key, code, savedBy } = req.payload;
+  const { key, code, savedBy, addToHistory } = req.payload;
   const existing = await kvs.get(key) || { code: '', history: [] };
 
-  const historyEntry = {
-    code,
-    timestamp: new Date().toISOString(),
-    savedBy: savedBy || 'unknown',
-  };
-
-  const history = [...existing.history, historyEntry].slice(-50);
+  let history = existing.history;
+  if (addToHistory) {
+    const historyEntry = {
+      code,
+      timestamp: new Date().toISOString(),
+      savedBy: savedBy || 'unknown',
+    };
+    history = [...history, historyEntry].slice(-50);
+  }
 
   const data = { code, history };
   await kvs.set(key, data);

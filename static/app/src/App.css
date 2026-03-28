@@ -340,7 +340,6 @@ body {
 
 .preview-inner {
   padding: 16px;
-  min-height: 100%;
   width: max-content;
 }
 
@@ -455,7 +454,6 @@ body {
 }
 
 .viewer-inner {
-  min-height: 100%;
   width: max-content;
 }
 

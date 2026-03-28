@@ -162,7 +162,7 @@ export default function Editor({ storageKey, initialCode, theme }) {
     if (saveTimerRef.current) {
       clearTimeout(saveTimerRef.current);
     }
-    invoke('saveDiagram', { key: storageKey, code, savedBy: 'editor' })
+    invoke('saveDiagram', { key: storageKey, code, savedBy: 'editor', addToHistory: true })
       .catch(console.error)
       .finally(() => {
         events.emit('DIAGRAM_UPDATED', { code });
