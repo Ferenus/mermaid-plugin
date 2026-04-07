@@ -50,3 +50,7 @@ Thumbs.db
 
 
 /.forge/
+
+# Environment variables
+.env
+.env.*

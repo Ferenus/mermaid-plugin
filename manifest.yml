@@ -1,6 +1,6 @@
 modules:
   macro:
-    - key: mermaid-diagrams-for-confluence-hello-world
+    - key: mermaid-diagrams-for-confluence
       resource: main
       resolver:
         function: resolver

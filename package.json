@@ -1,5 +1,5 @@
 {
-  "name": "confluence-macro-custom-ui",
+  "name": "mermaid-diagrams-for-confluence",
   "version": "1.1.17",
   "main": "index.js",
   "license": "MIT",
